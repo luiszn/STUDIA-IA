@@ -1,0 +1,56 @@
+# ---------- Environment ----------
+.env
+.env.*
+!.env.example
+*.local
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+coverage.xml
+.pytest_cache/
+
+# ---------- Node / Frontend ----------
+node_modules/
+dist/
+dist-ssr/
+.vite/
+*.local
+npm-debug.log*
+yarn-error.log*
+.eslintcache
+
+# ---------- Database ----------
+*.sqlite3
+*.sqlite3-journal
+database/*.sql
+database/backups/
+pgdata/
+
+# ---------- AI / Ollama ----------
+.ollama/
+ai/models/
+
+# ---------- Storage ----------
+backend/storage/
+storage/
+!backend/storage/.gitkeep
+uploads/
+
+# ---------- Docs / misc ----------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.log

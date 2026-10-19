@@ -1,0 +1,193 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------ theme */
+@theme {
+  --font-display: 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+
+  /* Neutrals — near black, slightly cool */
+  --color-ink-950: #08080a;
+  --color-ink-900: #0d0d11;
+  --color-ink-850: #121218;
+  --color-ink-800: #17171f;
+  --color-ink-750: #1e1e27;
+  --color-ink-700: #262631;
+  --color-ink-600: #34343f;
+  --color-ink-500: #4d4d5a;
+  --color-ink-400: #6f6f7d;
+  --color-ink-300: #9a9aa8;
+  --color-ink-200: #c8c8d2;
+  --color-ink-100: #e8e8ee;
+
+  /* Brand — the orange that carries every action */
+  --color-flame-50: #fff5ed;
+  --color-flame-100: #ffe7d4;
+  --color-flame-200: #ffc9a3;
+  --color-flame-300: #ffa066;
+  --color-flame-400: #ff7a1a;
+  --color-flame-500: #f2620a;
+  --color-flame-600: #d34d06;
+  --color-flame-700: #a83a08;
+  --color-flame-800: #7d2c0c;
+  --color-flame-900: #57210b;
+
+  /* Semantic */
+  --color-success: #2fbf71;
+  --color-warning: #f5a524;
+  --color-danger: #ef4a5b;
+  --color-info: #4b9bff;
+
+  --radius-xl: 0.875rem;
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 1.75rem;
+
+  --shadow-glow: 0 0 0 1px rgb(255 122 26 / 0.28), 0 12px 40px -12px rgb(255 122 26 / 0.45);
+  --shadow-panel: 0 1px 0 0 rgb(255 255 255 / 0.04) inset, 0 20px 50px -24px rgb(0 0 0 / 0.9);
+}
+
+/* ------------------------------------------------------------ base layer */
+@layer base {
+  * {
+    border-color: var(--color-ink-750);
+  }
+
+  html {
+    color-scheme: dark;
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    @apply bg-ink-950 text-ink-100 font-sans antialiased;
+    background-image:
+      radial-gradient(60rem 40rem at 78% -10%, rgb(255 122 26 / 0.09), transparent 60%),
+      radial-gradient(50rem 34rem at 8% 0%, rgb(75 155 255 / 0.05), transparent 55%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display tracking-tight text-ink-100;
+  }
+
+  ::selection {
+    @apply bg-flame-400/30 text-flame-50;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full border-2 border-solid border-transparent bg-ink-700 bg-clip-content;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-ink-600;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-flame-400;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font: inherit;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ----------------------------------------------------------- components */
+@layer components {
+  .panel {
+    @apply rounded-2xl border border-ink-750 bg-ink-900/70 shadow-panel backdrop-blur-sm;
+  }
+
+  .panel-hover {
+    @apply transition duration-200 hover:border-ink-600 hover:bg-ink-850/80;
+  }
+
+  .skeleton {
+    @apply animate-pulse rounded-lg bg-ink-800;
+  }
+
+  .markdown :where(h1, h2, h3) {
+    @apply mt-6 mb-2 font-display text-ink-100;
+  }
+
+  .markdown :where(p, li) {
+    @apply text-ink-200 leading-relaxed;
+  }
+
+  .markdown :where(ul, ol) {
+    @apply my-2 ml-5 list-outside space-y-1;
+  }
+
+  .markdown :where(ul) {
+    @apply list-disc;
+  }
+
+  .markdown :where(ol) {
+    @apply list-decimal;
+  }
+
+  .markdown :where(code) {
+    @apply rounded bg-ink-800 px-1.5 py-0.5 font-mono text-[0.85em] text-flame-200;
+  }
+
+  .markdown :where(pre) {
+    @apply my-3 overflow-x-auto rounded-xl border border-ink-750 bg-ink-950 p-4;
+  }
+
+  .markdown :where(a) {
+    @apply text-flame-300 underline underline-offset-2 hover:text-flame-200;
+  }
+
+  .markdown :where(blockquote) {
+    @apply my-3 border-l-2 border-flame-400/60 pl-4 text-ink-300 italic;
+  }
+}
+
+/* --------------------------------------------------------- flashcard flip */
+.flip-scene {
+  perspective: 1400px;
+}
+
+.flip-card {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.flip-card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.flip-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+}
